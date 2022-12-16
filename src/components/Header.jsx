@@ -38,7 +38,7 @@ export default class Header extends Component {
             <Link data-testid="link-to-favorites" to="/favorites">Favorites</Link>
           </li>
           <li>
-            <Link data-testid="link-to-profile" to="/album">Album</Link>
+            <Link data-testid="link-to-profile" to="/profile">Profile</Link>
           </li>
         </ul>
       </header>
