@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
+import searchAlbumsAPI from '../services/searchAlbumsAPI';
 
 export default class Search extends Component {
   state = {
     music: '',
     controlBtn: true,
+    loading: false,
+    albun: [],
+    isFoundAlbum: '',
   };
 
   handleChange = ({ target }) => {
@@ -16,11 +20,40 @@ export default class Search extends Component {
     });
   };
 
+  handFoundMusic = async (albuns, texts) => {
+    this.setState({
+      loading: false,
+      albun: albuns,
+      isFoundAlbum: texts,
+    });
+  };
+
+  hundleNotFountMusic = async (albuns, text) => {
+    this.setState({
+      loading: false,
+      albun: albuns,
+      isFoundAlbum: text,
+    });
+  };
+
+  handleClick = async () => {
+    const { music } = this.state;
+    const albuns = await searchAlbumsAPI(music);
+    this.setState({ loading: true, music: '' });
+    if (albuns.length) {
+      await this.handFoundMusic(albuns, '');
+    } else {
+      await this.hundleNotFountMusic(albuns, 'Nenhum álbum foi encontrado');
+    }
+  };
+
   render() {
-    const { music, controlBtn } = this.state;
+    const { isFoundAlbum, loading, music, controlBtn } = this.state;
     return (
       <div data-testid="page-search">
         <Header />
+        {loading && <p>Carregando...</p> }
+        {isFoundAlbum}
         <form>
           <label htmlFor="pesquisa">
             <input
@@ -32,6 +65,7 @@ export default class Search extends Component {
             />
           </label>
           <button
+            onClick={ this.handleClick }
             disabled={ controlBtn }
             data-testid="search-artist-button"
             type="button"
