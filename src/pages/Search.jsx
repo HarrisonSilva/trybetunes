@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
 
@@ -9,6 +10,8 @@ export default class Search extends Component {
     loading: false,
     albun: [],
     isFoundAlbum: '',
+    artistName: '',
+
   };
 
   handleChange = ({ target }) => {
@@ -39,16 +42,28 @@ export default class Search extends Component {
   handleClick = async () => {
     const { music } = this.state;
     const albuns = await searchAlbumsAPI(music);
-    this.setState({ loading: true, music: '' });
+    this.setState({ loading: true, artistName: music, music: '' });
     if (albuns.length) {
       await this.handFoundMusic(albuns, '');
     } else {
-      await this.hundleNotFountMusic(albuns, 'Nenhum álbum foi encontrado');
+      await this.hundleNotFountMusic([], 'Nenhum álbum foi encontrado');
     }
   };
 
   render() {
-    const { isFoundAlbum, loading, music, controlBtn } = this.state;
+    const { isFoundAlbum, loading, music, controlBtn, albun, artistName } = this.state;
+    const albumList = albun.map((item, index) => (
+      <div key={ index }>
+        <Link
+          to={ `/album/${item.collectionId}` }
+          data-testid={ `link-to-album-${item.collectionId}` }
+        >
+          <p>{item.artistName}</p>
+          <img src={ item.artworkUrl100 } alt={ item.collectionName } />
+          <p>{item.collectionName}</p>
+        </Link>
+      </div>
+    ));
     return (
       <div data-testid="page-search">
         <Header />
@@ -74,6 +89,11 @@ export default class Search extends Component {
 
           </button>
         </form>
+        <section>
+          {albun.length > 0
+           && <h2>{`Resultado de álbuns de: ${artistName}`}</h2>}
+          {albun && albumList}
+        </section>
       </div>
     );
   }
