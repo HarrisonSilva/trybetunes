@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
+import { addSong } from '../services/favoriteSongsAPI';
 
 class Album extends Component {
   constructor(props) {
     super(props);
     this.state = {
       musics: [],
+      loading: false,
     };
   }
 
@@ -19,16 +21,29 @@ class Album extends Component {
     this.setState({
       musics: musicsArray,
     });
-    console.log(musicsArray);
   }
 
-  render() {
+  addFavoriteMusic = async ({ target }) => {
     const { musics } = this.state;
+    const myMusics = musics.slice(1);
+    const songFavorite = myMusics.find((music) => music.trackId === Number(target.name));
+    this.setState({
+      loading: true,
+    });
+    await addSong(songFavorite);
+    this.setState({
+      loading: false,
+    });
+  };
+
+  render() {
+    const { musics, loading } = this.state;
     const artist = musics[0];
     const myMusics = musics.slice(1);
     return (
       <div data-testid="page-album">
         <Header />
+        {loading && <p>Carregando...</p> }
         <section>
           <h3 data-testid="artist-name">
             {musics.length > 0 && artist.artistName}
@@ -38,7 +53,11 @@ class Album extends Component {
           </h3>
           <div>
             {myMusics.map((music, index) => (
-              <MusicCard key={ index } { ...music } />
+              <MusicCard
+                key={ index }
+                { ...music }
+                addFavoriteMusic={ this.addFavoriteMusic }
+              />
             ))}
           </div>
         </section>
