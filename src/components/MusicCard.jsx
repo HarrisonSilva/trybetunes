@@ -6,10 +6,17 @@ export default class MusicCard extends Component {
     favorite: false,
   };
 
-  handleClick = ({ target }) => {
-    const { checked } = target;
+  componentDidMount() {
+    const { isFavoriteMusic } = this.props;
     this.setState({
-      favorite: checked,
+      favorite: isFavoriteMusic,
+    });
+  }
+
+  handleClick = ({ target }) => {
+    const isFavorite = target.checked;
+    this.setState({
+      favorite: isFavorite,
     });
   };
 
@@ -47,6 +54,7 @@ export default class MusicCard extends Component {
 MusicCard.propTypes = {
   previewUrl: PropTypes.string.isRequired,
   trackName: PropTypes.string.isRequired,
-  trackId: PropTypes.string.isRequired,
+  trackId: PropTypes.number.isRequired,
   addFavoriteMusic: PropTypes.func.isRequired,
+  isFavoriteMusic: PropTypes.bool.isRequired,
 };

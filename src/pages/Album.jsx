@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 class Album extends Component {
   constructor(props) {
@@ -11,6 +11,8 @@ class Album extends Component {
     this.state = {
       musics: [],
       loading: false,
+      musicsFavorites: [],
+      loadingFavorite: true,
     };
   }
 
@@ -21,7 +23,16 @@ class Album extends Component {
     this.setState({
       musics: musicsArray,
     });
+    this.loadingFavoritesSongs();
   }
+
+  loadingFavoritesSongs = async () => {
+    const musicsFavorites = await getFavoriteSongs();
+    this.setState({
+      musicsFavorites,
+      loadingFavorite: false,
+    });
+  };
 
   addFavoriteMusic = async ({ target }) => {
     const { musics } = this.state;
@@ -33,13 +44,14 @@ class Album extends Component {
     await addSong(songFavorite);
     this.setState({
       loading: false,
-    });
+    });    
   };
 
   render() {
-    const { musics, loading } = this.state;
+    const { musics, loading, loadingFavorite, musicsFavorites } = this.state;
     const artist = musics[0];
     const myMusics = musics.slice(1);
+    if (loadingFavorite) return <p>Carregando...</p>
     return (
       <div data-testid="page-album">
         <Header />
@@ -56,6 +68,10 @@ class Album extends Component {
               <MusicCard
                 key={ index }
                 { ...music }
+                isFavoriteMusic={
+                  musicsFavorites
+                    .some((favorite) => favorite.trackId === music.trackId)
+                }
                 addFavoriteMusic={ this.addFavoriteMusic }
               />
             ))}
