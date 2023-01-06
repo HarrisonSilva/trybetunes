@@ -44,14 +44,14 @@ class Album extends Component {
     await addSong(songFavorite);
     this.setState({
       loading: false,
-    });    
+    });
   };
 
   render() {
     const { musics, loading, loadingFavorite, musicsFavorites } = this.state;
     const artist = musics[0];
     const myMusics = musics.slice(1);
-    if (loadingFavorite) return <p>Carregando...</p>
+    if (loadingFavorite) return (<p>Carregando...</p>);
     return (
       <div data-testid="page-album">
         <Header />
@@ -90,4 +90,5 @@ Album.propTypes = {
       id: PropTypes.string,
     }),
   }).isRequired,
+
 };
