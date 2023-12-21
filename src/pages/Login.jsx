@@ -35,6 +35,7 @@ export default class Login extends Component {
     const { characters, controlBtn, loading, redirectUser } = this.state;
     return (
       <div data-testid="page-login">
+        <h1 className={ styles.title }>TrybeTunes</h1>
         {loading && <span>Carregando...</span>}
         {redirectUser && <Redirect to="/search" />}
         <form className={ styles.login }>
