@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { createUser } from '../services/userAPI';
+import styles from '../styles/login/title.module.css';
 
 export default class Login extends Component {
   state = {
@@ -36,7 +37,7 @@ export default class Login extends Component {
       <div data-testid="page-login">
         {loading && <span>Carregando...</span>}
         {redirectUser && <Redirect to="/search" />}
-        <form>
+        <form className={ styles.login }>
           <label htmlFor="nome">
             <input
               value={ characters }
@@ -56,6 +57,7 @@ export default class Login extends Component {
 
           </button>
         </form>
+        <img className={ styles.music } src="/music.png" alt="music png" />
       </div>
     );
   }

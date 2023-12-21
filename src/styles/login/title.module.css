@@ -1,0 +1,49 @@
+.title {
+  margin-left: 31.5rem;
+  font-size: 50px;
+  animation: pulse 1s infinite;
+  margin-top: 200px;
+  background-color: #fff;
+  width: fit-content;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+.login {
+  margin-left: 32rem;
+  margin-top: 1rem;
+}
+
+.login input{
+  border-radius: 5px;
+  height: 1.6rem;
+  margin: 1rem;
+}
+
+.login button{
+  border-radius: 5px;
+  background-color: #fff;
+  color: #000;
+  padding: 0.2rem;
+}
+
+
+.music {
+  width: 380px;
+  height: 250px;
+  border-radius: 100%;
+  margin-left: 29rem;
+  margin-top: 1rem;
+}
