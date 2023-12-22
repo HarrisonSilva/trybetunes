@@ -57,9 +57,7 @@ class Album extends Component {
       <div data-testid="page-album">
         <Header />
         {loading
-        && <p
-          style={ { marginTop:
-         '5rem', marginLeft: '37.5rem' } }>Carregando...</p> }
+        && <p className={ styles.loading }>Carregando...</p> }
         <section>
           <h3 className={ styles.band } data-testid="artist-name">
             {musics.length > 0 && artist.artistName}

@@ -52,6 +52,7 @@ export default class Search extends Component {
   };
 
   render() {
+    const result = 'Resultado de álbuns de:';
     const { isFoundAlbum, loading, music, controlBtn, albun, artistName } = this.state;
     const albumList = albun.map((item, index) => (
       <div key={ index } className={ styles.container }>
@@ -95,10 +96,7 @@ export default class Search extends Component {
         </form>
         <section>
           {albun.length > 0
-           && <h2 className={ styles.result }>
-             {`Resultado de álbuns de: ${artistName}`}
-
-           </h2>}
+           && <h2 className={ styles.result }>{`$${result}${artistName}`}</h2>}
           {albun && albumList}
         </section>
       </div>
