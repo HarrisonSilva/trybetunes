@@ -36,7 +36,7 @@ export default class Login extends Component {
     return (
       <div data-testid="page-login">
         <h1 className={ styles.title }>TrybeTunes</h1>
-        {loading && <span>Carregando...</span>}
+        {loading && <span className={ styles.loadingLogin }>Carregando...</span>}
         {redirectUser && <Redirect to="/search" />}
         <form className={ styles.login }>
           <label htmlFor="nome">

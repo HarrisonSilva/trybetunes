@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styles from '../styles/album/index.module.css';
 
 export default class MusicCard extends Component {
   state = {
@@ -25,16 +26,19 @@ export default class MusicCard extends Component {
     const { favorite } = this.state;
     return (
       <div>
-        <p>{ trackName }</p>
-        <audio data-testid="audio-component" src={ previewUrl } controls>
+        <p className={ styles.music }>{ trackName }</p>
+        <audio
+          className={ styles.audio }
+          data-testid="audio-component"
+          src={ previewUrl }
+          controls
+        >
           <track kind="captions" />
           O seu navegador não suporta o elemento
-          {' '}
-          {' '}
           <code>audio</code>
           .
         </audio>
-        <label htmlFor="favorite">
+        <label className={ styles.favorite } htmlFor="favorite">
           Favorita
           <input
             name={ trackId }

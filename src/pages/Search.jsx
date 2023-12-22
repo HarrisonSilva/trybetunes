@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
+import styles from '../styles/login/title.module.css';
 
 export default class Search extends Component {
   state = {
@@ -53,7 +54,7 @@ export default class Search extends Component {
   render() {
     const { isFoundAlbum, loading, music, controlBtn, albun, artistName } = this.state;
     const albumList = albun.map((item, index) => (
-      <div key={ index }>
+      <div key={ index } className={ styles.container }>
         <Link
           to={ `/album/${item.collectionId}` }
           data-testid={ `link-to-album-${item.collectionId}` }
@@ -63,6 +64,7 @@ export default class Search extends Component {
           <p>{item.collectionName}</p>
         </Link>
       </div>
+
     ));
     return (
       <div data-testid="page-search">
@@ -72,6 +74,7 @@ export default class Search extends Component {
         <form>
           <label htmlFor="pesquisa">
             <input
+              className={ styles.inputForm }
               value={ music }
               onChange={ this.handleChange }
               id="pesquisa"
@@ -80,6 +83,7 @@ export default class Search extends Component {
             />
           </label>
           <button
+            className={ styles.btnForm }
             onClick={ this.handleClick }
             disabled={ controlBtn }
             data-testid="search-artist-button"
@@ -91,7 +95,10 @@ export default class Search extends Component {
         </form>
         <section>
           {albun.length > 0
-           && <h2>{`Resultado de álbuns de: ${artistName}`}</h2>}
+           && <h2 className={ styles.result }>
+             {`Resultado de álbuns de: ${artistName}`}
+
+           </h2>}
           {albun && albumList}
         </section>
       </div>

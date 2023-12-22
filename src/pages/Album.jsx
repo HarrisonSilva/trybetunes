@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
 import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
+import styles from '../styles/album/index.module.css';
 
 class Album extends Component {
   constructor(props) {
@@ -55,12 +56,15 @@ class Album extends Component {
     return (
       <div data-testid="page-album">
         <Header />
-        {loading && <p>Carregando...</p> }
+        {loading
+        && <p
+          style={ { marginTop:
+         '5rem', marginLeft: '37.5rem' } }>Carregando...</p> }
         <section>
-          <h3 data-testid="artist-name">
+          <h3 className={ styles.band } data-testid="artist-name">
             {musics.length > 0 && artist.artistName}
           </h3>
-          <h3 data-testid="album-name">
+          <h3 className={ styles.album } data-testid="album-name">
             {musics.length > 0 && artist.collectionName}
           </h3>
           <div>
